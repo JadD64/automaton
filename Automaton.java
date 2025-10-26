@@ -46,28 +46,31 @@ public class Automaton
      */
     public void update()
     {
-        // Build the new state in a separate array.
-        int[] nextState = new int[state.length];
-        // Naively update the state of each cell
-        // based on the state of its two neighbors.
-        for(int i = 0; i < state.length; i++) {
-            int left, center, right;
-            if(i == 0) {
-                left = 0;
-            }
-            else {
-                left = state[i - 1];
-            }
-            center = state[i];
-            if(i + 1 < state.length) {
-                right = state[i + 1];
-            }
-            else {
-                right = 0;
-            }
-            nextState[i] = (left + center + right) % 2;
+    // Build the new state in a separate array.
+    int[] nextState = new int[state.length];
+
+    // Naively update the state of each cell
+    // based on the state of its two neighbors.
+    for (int i = 0; i < state.length; i++) {
+        int left, center, right;
+        // Use if-else for left neighbor
+        if (i == 0) {
+            left = 0;
+        } else {
+            left = state[i - 1];
         }
-        state = nextState;
+        center = state[i];
+        // Use if-else for right neighbor
+        if (i + 1 < state.length) {
+            right = state[i + 1];
+        } else {
+            right = 0;
+        }
+        // Compute next state
+        nextState[i] = (left + center + right) % 2;
+    }
+    // Replace the old state with the new one
+    state = nextState;
     }
     
     /**
